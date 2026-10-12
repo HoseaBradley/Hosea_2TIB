@@ -82,8 +82,8 @@
     <!-- Hero Section -->
     <section class="hero-section">
         <div class="container">
-            <h1 class="display-6 mb-2">{{ $username }}</h1>
-            <p class="lead mb-0"> {{ $last_login }}</p>
+            <h1 class="display-6 mb-2">{{$username}}!</h1>
+            <p class="lead mb-0">{{$last_login}}</p>
         </div>
     </section>
 
@@ -152,15 +152,56 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
-                {{-- Alerts --}}
-                <div class="card ">
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm">
                     <div class="card-body">
-                        <h3 class="h5 mb-3">Alerts</h3>
-                        <div class="alert alert-primary mb-2">Informational alert</div>
-                        <div class="alert alert-success mb-2">Success alert</div>
-                        <div class="alert alert-warning mb-2">Warning alert</div>
-                        <div class="alert alert-danger mb-0">Danger alert</div>
+                        <h5 class="card-title mb-3">Form Pertanyaan</h5>
+
+                        <form action="{{ route('question.store') }}" method="POST" novalidate>
+                            @csrf
+
+                            {{-- Pesan error Laravel akan tampil di sini --}}
+                            @if ($errors->any())
+                            <div class="alert alert-danger mb-3">
+                                <ul class="mb-0">
+                                    @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            @endif
+
+                            <div class="mb-3">
+                                <label for="nama" class="form-label">Nama</label>
+                                {{-- PASTIKAN TIDAK ADA atribut required di sini --}}
+                                <input type="text" class="form-control" name="nama" id="nama" value="{{ old('nama') }}">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                {{-- Gunakan type="text" atau hilangkan required agar tidak dicegah browser --}}
+                                <input type="text" class="form-control" name="email" id="email" value="{{ old('email') }}">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="pertanyaan" class="form-label">Pertanyaan</label>
+                                <textarea class="form-control" name="pertanyaan" id="pertanyaan" rows="4">{{ old('pertanyaan') }}</textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100">Kirim Pertanyaan</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kolom Kanan: Alerts / Konten Lain -->
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Informasi</h5>
+                        <div class="alert alert-info mb-0">
+                            Silakan isi form di samping untuk mengajukan pertanyaan.
+                        </div>
                     </div>
                 </div>
 
