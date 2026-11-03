@@ -8,6 +8,7 @@ use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\ExperienceController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SkillController;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -35,3 +36,5 @@ Route::prefix('admin')->group(function () {
     // Route Skill (Inilah nama route yang dicari: skill.index, skill.store, skill.destroy)
     Route::resource('skill', SkillController::class);
 });
+
+Route::resource('user', UserController::class);
