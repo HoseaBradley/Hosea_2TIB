@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Models\User;
 
+use Illuminate\Support\Facades\Hash;
+
 
 class UserController extends Controller
 {
@@ -13,7 +15,7 @@ class UserController extends Controller
      * Display a listing of the resource.
      */
     public function index(){
-		$user = User::all();
+		$data['dataUser'] = User::all();
 		return view('admin.user.index',$data);
 }
 
@@ -30,18 +32,16 @@ class UserController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        //dd($request->all());
-        $data['name'] = $request->name;
-		$data['email'] = $request->email;
-        $data['password'] = Hash::make($request->password);
+{
+    // Simpan data user baru
+    User::create([
+        'name'     => $request->name,
+        'email'    => $request->email,
+        'password' => Hash::make($request->password),
+    ]);
 
-
-
-		User::create($data);
-
-		return redirect()->route('user.index')->with('success','Penambahan Data Berhasil!');
-    }
+    return redirect()->route('user.index')->with('success', 'User berhasil ditambahkan!');
+}
 
     /**
      * Display the specified resource.
@@ -56,7 +56,7 @@ class UserController extends Controller
      */
     public function edit(string $id)
 {
-    $user = User::findOrFail($id);
+    $data['dataUser'] = User::findOrFail($id);
     return view('admin.user.edit', $data);
 }
 
@@ -66,7 +66,7 @@ class UserController extends Controller
     public function update(Request $request, string $id)
 {
     $user_id = $id;
-    $user = user::findOrFail($user_id);
+    $user = User::findOrFail($user_id);
 
     $user->name = $request->name;
     $user->email = $request->email;
@@ -81,7 +81,7 @@ class UserController extends Controller
      */
     public function destroy(string $id)
 {
-    $user = Pelanggan::findOrFail($id);
+    $user = User::findOrFail($id);
 
     $user->delete();
     return redirect()->route('user.index')->with('success','Data berhasil dihapus');
