@@ -43,6 +43,17 @@
                                 <input type="text" id="name" class="form-control" name="name"
                                     required>
                             </div>
+
+                            <!-- Role -->
+                            <div class="mb-3">
+                                <label for="role" class="form-label">Role</label>
+                                <select name="role" id="role" class="form-select" required>
+                                    <option value="">-- Pilih Role --</option>
+                                    <option value="Super Admin" {{ old('role') == 'Super Admin' ? 'selected' : '' }}>Super Admin</option>
+                                    <option value="Pelanggan" {{ old('role') == 'Pelanggan' ? 'selected' : '' }}>Pelanggan</option>
+                                    <option value="Mitra" {{ old('role') == 'Mitra' ? 'selected' : '' }}>Mitra</option>
+                                </select>
+                            </div>
                         </div>
 
                         <div class="col-lg-4 col-sm-12">
@@ -75,7 +86,6 @@
         </div>
 
     </div>
-</div>
 </div>
 
 @endsection
